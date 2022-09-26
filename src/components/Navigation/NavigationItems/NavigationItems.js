@@ -4,7 +4,9 @@ import { NavLink } from 'react-router-dom';
 import './NavigationItems.css';
 
 const navItems = [
-  { id: 'feed', text: 'Feed', link: '/', auth: false },
+  { id: 'messages', text: 'Messages', link: '/', auth: false },
+  { id: 'post-project', text: 'Post Project', link: '/', auth: false },
+  { id: 'add-proect', text: 'Add Project', link: '/', auth: false },
   { id: 'login', text: 'Login', link: '/', auth: false },
   { id: 'signup', text: 'Signup', link: '/signup', auth: false }
 ];
@@ -23,7 +25,7 @@ const NavigationItems = (props) => {
     </li>
   ))}
   {!props.isAuth && <li className={['navigation-item', props.mobile ? 'mobile' : ''].join(' ')}  key="logout">
-      <button id="ki" onClick={props.onLogout}>Logout</button>
+      <button onClick={props.onLogout}>Logout</button>
     </li>}
   </React.Fragment>
   };
