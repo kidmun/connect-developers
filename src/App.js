@@ -7,6 +7,8 @@ import MainNavigation from './components/Navigation/MainNavigation/MainNavigatio
 import MobileNavigation from './components/Navigation/MobileNavigation/MobileNavigation';
 import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup';
+import PostPage from './pages/post/Post';
+import ProjectsPage from './pages/project/Projects';
 import './App.css';
 
 function App() {
@@ -54,6 +56,8 @@ function App() {
           }
         />
    <Routes>
+        <Route path="/" element={ <PostPage/> } />
+        <Route path="/projects" element={ <ProjectsPage/> } />
         <Route path="/login" element={ <Login/> } />
         <Route path="/signup" element={ <Signup/> } />
   

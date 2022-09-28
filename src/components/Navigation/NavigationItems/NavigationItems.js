@@ -4,9 +4,10 @@ import { NavLink } from 'react-router-dom';
 import './NavigationItems.css';
 
 const navItems = [
-  { id: 'messages', text: 'Messages', link: '/', auth: false },
-  { id: 'post-project', text: 'Post Project', link: '/', auth: false },
-  { id: 'add-proect', text: 'Add Project', link: '/', auth: false },
+  { id: 'projects', text: 'Projects', link: '/projects', auth: false },
+  { id: 'messages', text: 'Messages', link: '/messages', auth: false },
+  { id: 'post-project', text: 'Post', link: '/add-post', auth: false },
+  { id: 'add-proect', text: 'Add Project', link: '/add-project', auth: false },
   { id: 'login', text: 'Login', link: '/login', auth: false },
   { id: 'signup', text: 'Signup', link: '/signup', auth: false }
 ];
