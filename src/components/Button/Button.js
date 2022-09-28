@@ -1,10 +1,10 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-
+import React from "react";
+import { Link } from "react-router-dom";
 import './Button.css';
 
-const button = props =>
-  !props.link ? (
+const Button = (props) => {
+    return <React.Fragment>
+        {!props.link ? (
     <button
       className={[
         'button',
@@ -28,6 +28,9 @@ const button = props =>
     >
       {props.children}
     </Link>
-  );
+  )
+}
+    </React.Fragment>
+};
 
-export default button;
+export default Button;

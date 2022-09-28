@@ -5,6 +5,8 @@ import Layout from './components/Layout/Layout';
 import Toolbar from './components/Toolbar/Toolbar';
 import MainNavigation from './components/Navigation/MainNavigation/MainNavigation';
 import MobileNavigation from './components/Navigation/MobileNavigation/MobileNavigation';
+import Login from './pages/auth/Login';
+import Signup from './pages/auth/Signup';
 import './App.css';
 
 function App() {
@@ -51,7 +53,11 @@ function App() {
             />
           }
         />
-   <h1>Hi there</h1>
+   <Routes>
+        <Route path="/login" element={ <Login/> } />
+        <Route path="/signup" element={ <Signup/> } />
+  
+      </Routes>
    </React.Fragment>
   );
 }

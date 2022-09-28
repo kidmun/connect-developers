@@ -7,7 +7,7 @@ const navItems = [
   { id: 'messages', text: 'Messages', link: '/', auth: false },
   { id: 'post-project', text: 'Post Project', link: '/', auth: false },
   { id: 'add-proect', text: 'Add Project', link: '/', auth: false },
-  { id: 'login', text: 'Login', link: '/', auth: false },
+  { id: 'login', text: 'Login', link: '/login', auth: false },
   { id: 'signup', text: 'Signup', link: '/signup', auth: false }
 ];
 
