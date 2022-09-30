@@ -9,6 +9,8 @@ import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup';
 import PostPage from './pages/post/Post';
 import ProjectsPage from './pages/project/Projects';
+import AddPostPage from './pages/post/AddPost';
+import AddProjectPage from './pages/project/AddProject';
 import './App.css';
 
 function App() {
@@ -58,6 +60,8 @@ function App() {
    <Routes>
         <Route path="/" element={ <PostPage/> } />
         <Route path="/projects" element={ <ProjectsPage/> } />
+        <Route path="/add-post" element={ <AddPostPage/> } />
+        <Route path="/add-project" element={ <AddProjectPage/> } />
         <Route path="/login" element={ <Login/> } />
         <Route path="/signup" element={ <Signup/> } />
   
