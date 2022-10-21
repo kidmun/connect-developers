@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Routes, Route, NavLink } from "react-router-dom";
-import { useSelector} from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import Backdrop from './components/Backdrop/Backdrop';
 import Layout from './components/Layout/Layout';
 import Toolbar from './components/Toolbar/Toolbar';
@@ -12,10 +12,13 @@ import PostPage from './pages/post/Post';
 import ProjectsPage from './pages/project/Projects';
 import AddPostPage from './pages/post/AddPost';
 import AddProjectPage from './pages/project/AddProject';
+import PostDetail from './components/Post/PostDetail';
 
 import './App.css';
+import { statusActions } from './store/statusSlice';
 
 function App() {
+  const dispatch = useDispatch();
 
   const [showBackdrop, setShowBackdrop] = useState(false);
   const [showMobileNav, setShowMobileNav] = useState(false);
@@ -28,6 +31,7 @@ function App() {
     setShowMobileNav(isOpen);
   };
   const logoutHandler = () => {
+    dispatch(statusActions.defaultToken())
     setIsAuth(false);
   };
  const backdropClickHandler = () => {
@@ -68,6 +72,7 @@ function App() {
         <Route path="/add-project" element={ <AddProjectPage/> } />
         <Route path="/login" element={ <Login/> } />
         <Route path="/signup" element={ <Signup/> } />
+        <Route path="/posts/:postId" element={ <PostDetail/> } />
   
       </Routes>
    </React.Fragment>

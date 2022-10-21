@@ -4,10 +4,10 @@ import { NavLink } from 'react-router-dom';
 import './NavigationItems.css';
 
 const navItems = [
-  { id: 'projects', text: 'Projects', link: '/projects', auth: false },
-  { id: 'messages', text: 'Messages', link: '/messages', auth: false },
-  { id: 'post-project', text: 'Post', link: '/add-post', auth: false },
-  { id: 'add-proect', text: 'Add Project', link: '/add-project', auth: false },
+  { id: 'projects', text: 'Projects', link: '/projects', auth: true },
+  { id: 'messages', text: 'Messages', link: '/messages', auth: true },
+  { id: 'post-project', text: 'Post', link: '/add-post', auth: true},
+  { id: 'add-proect', text: 'Add Project', link: '/add-project', auth: true },
   { id: 'login', text: 'Login', link: '/login', auth: false },
   { id: 'signup', text: 'Signup', link: '/signup', auth: false }
 ];
@@ -25,7 +25,7 @@ const NavigationItems = (props) => {
       </NavLink>
     </li>
   ))}
-  {!props.isAuth && <li className={['navigation-item', props.mobile ? 'mobile' : ''].join(' ')}  key="logout">
+  {props.isAuth && <li className={['navigation-item', props.mobile ? 'mobile' : ''].join(' ')}  key="logout">
       <button onClick={props.onLogout}>Logout</button>
     </li>}
   </React.Fragment>

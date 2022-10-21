@@ -1,11 +1,16 @@
 import React, { useState} from "react";
+import { useDispatch } from "react-redux";
 import Button from "../../components/Button/Button";
 import Input from '../../components/Form/Input/Input';
 import { required, length, email } from '../../util/validators';
+import { statusActions} from '../../store/statusSlice';
 import Auth from "./Auth";
+import { useNavigate } from "react-router-dom";
 
 
 const Login = (props) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
     const [loginForm, setLoginForm] = useState({
         email: {
           value: '',
@@ -61,7 +66,31 @@ const Login = (props) => {
     return <Auth>
         <form onSubmit={e => {
           e.preventDefault();
-          console.log(loginForm, formIsValid)
+          if (!formIsValid){
+            return;
+          }
+          fetch('http://localhost:8080/auth/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              email: loginForm.email.value,
+              password: loginForm.password.value
+            })
+          }).then(response => {
+            if(!response.ok){
+              throw new Error("response not ok");
+            }
+            return response.json();
+          })
+          .then(result => {
+            console.log(result.token)
+            dispatch(statusActions.setToken(result.token))
+            navigate('/');
+          }).catch(err => {
+            console.log(err)
+          })
         }}>
         <Input
             id="email"

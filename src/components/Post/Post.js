@@ -4,6 +4,7 @@ import Image from "../Image/Image";
 import './Post.css';
 
 const Post = (props) => {
+
     return <article className="post">
     <header className="post__header">
       <h3 className="post__meta">
@@ -17,7 +18,7 @@ const Post = (props) => {
     <br/>
     <div className="post__content">{props.content}</div>
     <div className="post__actions">
-      <Button mode="flat" link={props.id}>
+      <Button mode="flat" link={"/posts/"+props.id}>
         View
       </Button>
       <Button mode="flat" onClick={props.onStartEdit}>
@@ -26,8 +27,11 @@ const Post = (props) => {
       <Button mode="flat" design="danger" onClick={props.onDelete}>
         Delete
       </Button>
+
     </div>
+   
   </article>
+ 
 };
 
 export default Post;

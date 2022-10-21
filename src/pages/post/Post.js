@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Post from "../../components/Post/Post";
 
 const DUMMY_POST = [
@@ -25,21 +25,35 @@ const startEditPostHandler = (id) => {
 
 const deletePostHandler = (id) => {};
 const PostPage = (props) => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:8080/posts?page=3').then(response => {
+      if (!response.ok){
+        throw new Error("response not ok");
+      }
+      return response.json()
+    }).then(result => {
+      console.log(result)
+      setPosts(result.posts)
+    }).catch(err => {
+      console.log(err)
+    })
+  }, [])
   return (
     <ul>
-      {DUMMY_POST.map((post) => (<li>
+      {posts.map((post) => (
         <Post
           key={post._id}
           id={post._id}
           author={post.creator.name}
           date={new Date(post.createdAt).toLocaleDateString("en-US")}
           title={post.title}
-          image={post.imageUrl}
+          image={"http://localhost:8080/images/"+ post.imageUrl.slice(7,post.imageUrl.length)}
           content={post.content}
           onStartEdit={startEditPostHandler.bind(this, post._id)}
           onDelete={deletePostHandler.bind(this, post._id)}
-        />
-        </li>
+        />     
       ))}
     </ul>
   );
