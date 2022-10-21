@@ -10,7 +10,7 @@ const Image = (props) => {
       backgroundSize: props.contain ? 'contain' : 'cover',
       backgroundPosition: props.left ? 'left' : 'center'
     }}
-  />
+  ></div>
   };
 
 export default Image;

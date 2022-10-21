@@ -65,8 +65,30 @@ const Signup = (props) => {
       return <Auth>
           <form onSubmit={e => {
             e.preventDefault();
-            console.log(signupForm, formIsValid)
-          }}>
+            console.log(signupForm.email.value, formIsValid)
+
+            fetch('http://localhost:8080/auth/signup', {
+              method: "PUT", 
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                email: signupForm.email.value,
+                name: signupForm.name.value,
+                password: signupForm.password.value
+              })
+          }).then(response => {
+            if (!response.ok){
+              throw new Error("invalid somthing");
+          }
+          return response.json()
+        }).then(result => {
+            console.log(result);
+          }).catch(err => {
+            console.log(err)
+          })
+        }}
+        >
           <Input
             id="email"
             label="Your E-Mail"

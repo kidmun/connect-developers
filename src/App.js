@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Routes, Route, NavLink } from "react-router-dom";
+import { useSelector} from 'react-redux';
 import Backdrop from './components/Backdrop/Backdrop';
 import Layout from './components/Layout/Layout';
 import Toolbar from './components/Toolbar/Toolbar';
@@ -11,6 +12,7 @@ import PostPage from './pages/post/Post';
 import ProjectsPage from './pages/project/Projects';
 import AddPostPage from './pages/post/AddPost';
 import AddProjectPage from './pages/project/AddProject';
+
 import './App.css';
 
 function App() {
@@ -18,6 +20,8 @@ function App() {
   const [showBackdrop, setShowBackdrop] = useState(false);
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
+  const users = useSelector(state => state.users.users);
+  console.log(users)
 
   const mobileNavHandler = (isOpen) => {
     setShowBackdrop(isOpen);
