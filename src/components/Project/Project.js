@@ -10,7 +10,7 @@ const Project = (props) => {
       <h3 className="project__meta">
         Posted by {props.author} on {props.date}
       </h3>
-      <h1 className="project__title">{props.title}</h1>
+      <h1 id="project__title">{props.title}</h1>
     </header>
     <div className="project__image">
       <Image imageUrl={props.image} contain />

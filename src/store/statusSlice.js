@@ -4,7 +4,12 @@ const statusSlice = createSlice({
     name: 'status',
     initialState: {
         token: '',
-        userId: ''
+        userId: '',
+        notification: {
+            status: '',
+            title: '',
+            message: ''
+        }
     },
     reducers: {
         setToken(state, action){
@@ -18,6 +23,16 @@ const statusSlice = createSlice({
         },
         defaultUserId(state) {
             state.userId = ''
+        },
+        setNotification(state, action){
+            state.notification = action.payload;
+        },
+        defaultNotification(state){
+            state.notification = {
+                status: '',
+                title: '',
+                message: ''
+            }
         }
     }
 });

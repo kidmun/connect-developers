@@ -16,6 +16,7 @@ import ProjectDetailPage from './pages/project/ProjectDetail';
 import PostDetailPage from './pages/post/PostDetail';
 import AccountPage from './pages/user/Account';
 import UsersPage from './pages/user/Users';
+import Notification from './components/Notification/Notification';
 
 import './App.css';
 import { statusActions } from './store/statusSlice';
@@ -27,6 +28,7 @@ function App() {
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
   const users = useSelector(state => state.users.users);
+  const notification = useSelector(state => state.status.notification);
   console.log(users)
 
   const mobileNavHandler = (isOpen) => {
@@ -34,6 +36,7 @@ function App() {
     setShowMobileNav(isOpen);
   };
   const logoutHandler = () => {
+    console.log("working")
     dispatch(statusActions.defaultToken())
     setIsAuth(false);
   };
@@ -68,6 +71,7 @@ function App() {
             />
           }
         />
+        {notification.status.length > 0 && <Notification status={notification.status} title={notification.title} message={notification.message}/>}
    <Routes>
         <Route path="/" element={ <PostPage/> } />
         <Route path="/projects" element={ <ProjectsPage/> } />

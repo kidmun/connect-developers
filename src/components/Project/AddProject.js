@@ -7,6 +7,8 @@ import Image from "../Image/Image";
 import { required, length } from '../../util/validators';
 import { generateBase64FromImage } from '../../util/image';
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { statusActions } from "../../store/statusSlice";
 
 
 
@@ -33,9 +35,11 @@ const PROJECT_FORM = {
 
 const AddProject = (props) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
     const [projectForm, setProjectForm] = useState(PROJECT_FORM);
     const [formIsValid, setFormIsValid] = useState(false);
     const [imagePreview, setImagePreview] = useState(null);
+    const token = useSelector(state => state.status.token);
    
   const projectInputChangeHandler = (input, value, files) => {
     if (files) {
@@ -84,20 +88,83 @@ formData.append('content', projectForm.content.value)
 
 fetch('http://localhost:8080/project', {
 
+  headers: {
+    Authorization: "Bearer " + token,
+  },
   method: "POST", 
   body: formData
  
   
 }).then(response => {
 if (!response.ok){
-  throw new Error("invalid somthing");
+  if (response.status === 422){
+         
+    throw new Error("Credential Error");
+      }
+      else {
+        throw new Error("Server Error");
+      }
 }
 return response.json()
 }).then(result => {
 console.log(result);
+dispatch(
+  statusActions.setNotification({
+    status: "succes",
+    title: "Signup",
+    message: "you have successfully created a project",
+  })
+);
+setTimeout(() => {
+  dispatch(
+    statusActions.setNotification({
+      status: "",
+      title: "",
+      message: "",
+    })
+  );
+}, 5000);
 navigate('/projects');
 }).catch(err => {
 console.log(err)
+if (err.message==='Credential Error'){
+  dispatch(
+
+    statusActions.setNotification({
+      status: "error",
+      title: "Signup",
+      message: "Please Enter title, image, content",
+    })
+  );
+  setTimeout(() => {
+    dispatch(
+      statusActions.setNotification({
+        status: "",
+        title: "",
+        message: "",
+      })
+    );
+  }, 5000);
+}
+else{
+  dispatch(
+    statusActions.setNotification({
+      status: "error",
+      title: "Signup",
+      message: "Something is Wrong, Please try Again",
+    })
+  );
+  setTimeout(() => {
+    dispatch(
+      statusActions.setNotification({
+        status: "",
+        title: "",
+        message: "",
+      })
+    );
+  }, 8000);
+
+}
 })
 };
 

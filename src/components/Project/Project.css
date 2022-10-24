@@ -1,20 +1,24 @@
 .project {
     margin: 1rem 0;
-    border: 1px solid #24a392;
+    border: 1px solid #8e24a3;
     border-radius: 5px;
     padding: 0.5rem;
+  }
+  .project__header{
+  background-color: rgba(139, 4, 27, 0.7);
+  
   }
   
   .project__meta {
     font-size: 1rem;
-    color: #707070;
+    color: white;
     margin: 0;
   }
   
-  .project__title {
+  #project__title {
     font-size: 1.5rem;
     margin: 1rem 0;
-    color: #24a392;;
+    color: white;
   }
   
   .project__image {
@@ -24,6 +28,10 @@
   
   .project__actions {
     text-align: right;
+  }
+  .project__content {
+    color: rgba(139, 4, 27, 0.7);
+    font-size: 1.3rem;
   }
   
   @media (min-width: 768px) {
