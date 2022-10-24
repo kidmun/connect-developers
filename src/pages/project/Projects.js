@@ -1,46 +1,75 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import Project from "../../components/Project/Project";
+import Paginator from "../../components/Paginator/Paginator";
+let CURRENT_PAGE = 1;
 
 
-const DUMMY_PROJECTS = [
-    {
-      _id: "m1",
-      title: "first project",
-      imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/1280px-Stadtbild_M%C3%BCnchen.jpg",
-      content: "yeah bitch",
-      creator: { name: "kidus" },
-      createdAt: Date.now(),
-    },
-    {
-      _id: "m2",
-      title: "second project",
-      imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/1280px-Stadtbild_M%C3%BCnchen.jpg",
-      content: "yeah bitch",
-      creator: { name: "kido" },
-      createdAt: Date.now(),
+const ProjectsPage = (props) => {
+  const token = useSelector((state) => state.status.token);
+  const [projects, setProjects] = useState([]);
+  const [totalProjects, setTotalProjects] = useState(CURRENT_PAGE);
+  const [currentPage, setCurrentPage] = useState(CURRENT_PAGE);
+  console.log(totalProjects)
+
+  useEffect(() => {
+    fetch("http://localhost:8080/projects?page="+currentPage, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("response not ok");
+        }
+        return response.json();
+      })
+      .then((result) => {
+        console.log(result);
+        setProjects(result.projects);
+        setTotalProjects(result.totalItems);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [CURRENT_PAGE]);
+  const pageChangeHandler = (direction) => {
+    if (direction === "next") {
+      CURRENT_PAGE++;
+      setCurrentPage(CURRENT_PAGE);
     }
-  ];
-
-  const ProjectsPage = (props) => {
-    return (
-      <ul>
-        {DUMMY_PROJECTS.map((post) => (<li>
-          <Project
-            key={post._id}
-            id={post._id}
-            author={post.creator.name}
-            date={new Date(post.createdAt).toLocaleDateString("en-US")}
-            title={post.title}
-            image={post.imageUrl}
-            content={post.content}
-        
-          />
-          </li>
-        ))}
-      </ul>
-    );
+    if (direction === "prev") {
+      CURRENT_PAGE--;
+      setCurrentPage(CURRENT_PAGE);
+    }
   };
-  
+  return (
+    <ul>
+      <Paginator
+        onPrevious={pageChangeHandler.bind(this, "prev")}
+        onNext={pageChangeHandler.bind(this, "next")}
+        currentPage={currentPage}
+        lastPage={Math.ceil(totalProjects / 2)}
+      >
+        {projects.map((project) => (
+          <div style={{ marginBottom: 20 }}>
+            <Project
+              key={project._id}
+              id={project._id}
+              author={project.creator}
+              date={new Date(project.createdAt).toLocaleDateString("en-US")}
+              title={project.title}
+              image={
+                "http://localhost:8080/images/" +
+                project.imageUrl.slice(7, project.imageUrl.length)
+              }
+              content={project.content}
+            />
+          </div>
+        ))}
+      </Paginator>
+    </ul>
+  );
+};
 
 export default ProjectsPage;

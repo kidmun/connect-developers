@@ -12,7 +12,10 @@ import PostPage from './pages/post/Post';
 import ProjectsPage from './pages/project/Projects';
 import AddPostPage from './pages/post/AddPost';
 import AddProjectPage from './pages/project/AddProject';
-import PostDetail from './components/Post/PostDetail';
+import ProjectDetailPage from './pages/project/ProjectDetail';
+import PostDetailPage from './pages/post/PostDetail';
+import AccountPage from './pages/user/Account';
+import UsersPage from './pages/user/Users';
 
 import './App.css';
 import { statusActions } from './store/statusSlice';
@@ -72,7 +75,10 @@ function App() {
         <Route path="/add-project" element={ <AddProjectPage/> } />
         <Route path="/login" element={ <Login/> } />
         <Route path="/signup" element={ <Signup/> } />
-        <Route path="/posts/:postId" element={ <PostDetail/> } />
+        <Route path="/posts/:postId" element={ <PostDetailPage/> } />
+        <Route path="/projects/:projectId" element={ <ProjectDetailPage/> } />
+        <Route path="/account" element={ <AccountPage/> } />
+        <Route path="/users" element={ <UsersPage/> } />
   
       </Routes>
    </React.Fragment>

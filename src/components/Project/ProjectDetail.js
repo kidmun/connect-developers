@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Image from "../Image/Image";
-import './PostDetail.css';
+import './ProjectDetail.css';
 
 
 
-const PostDetail = () => {
+const ProjectDetail = () => {
   const token = useSelector(state => state.status.token);
 
-    const [post, setPost] = useState({
+    const [project, setProject] = useState({
         id: '',
         title: '',
         creator: {name: ''},
@@ -17,10 +17,10 @@ const PostDetail = () => {
         imageUrl: '',
         content: ''
       });
-      const {postId} = useParams();
-      console.log(postId)
+      const {projectId} = useParams();
+      console.log(projectId)
       useEffect(() => {
-        fetch('http://localhost:8080/posts/'+postId, {
+        fetch('http://localhost:8080/projects/'+projectId, {
           headers: {
             Authorization: 'Bearer ' + token
           }
@@ -34,20 +34,20 @@ const PostDetail = () => {
         })
         .then(result => {
             console.log(result)
-            setPost(result.post)
+            setProject(result.project)
         });
       }, []);
       
-    return  <article className="post">
-    <h1>{post.title}</h1>
+    return  <article className="project">
+    <h1>{project.title}</h1>
     <h2>
-      Created by  on {post.createdAt}
+      Created by  on {project.createdAt}
     </h2>
-    <div className="single-post__image">
-      <Image contain imageUrl={"http://localhost:8080/images/"+ post.imageUrl.slice(7,post.imageUrl.length)} />
+    <div className="single-project__image">
+      <Image contain imageUrl={"http://localhost:8080/images/"+ project.imageUrl.slice(7,project.imageUrl.length)} />
     </div>
-    <p>{post.content}</p>
+    <p>{project.content}</p>
     </article>
 };
 
-export default PostDetail;
+export default ProjectDetail;

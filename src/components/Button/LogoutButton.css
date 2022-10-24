@@ -1,0 +1,13 @@
+#button-logout {
+    font: inherit;
+    border: 1px solid white;
+    color: white;
+    background: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-decoration: none;
+    background-color: #454644;;
+  }
+  
+  

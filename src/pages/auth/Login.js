@@ -85,8 +85,9 @@ const Login = (props) => {
             return response.json();
           })
           .then(result => {
-            console.log(result.token)
+            console.log(result)
             dispatch(statusActions.setToken(result.token))
+            dispatch(statusActions.setUserId(result.userId))
             navigate('/');
           }).catch(err => {
             console.log(err)

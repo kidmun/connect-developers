@@ -6,32 +6,34 @@ import FilePicker from "../Form/Input/FilePicker";
 import Image from "../Image/Image";
 import { required, length } from '../../util/validators';
 import { generateBase64FromImage } from '../../util/image';
+import { useNavigate } from "react-router-dom";
 
 
 
-
+const PROJECT_FORM = {
+  title: {
+    value: '',
+    valid: false,
+    touched: false,
+    validators: [required, length({ min: 5 })]
+  },
+  image: {
+    value: '',
+    valid: false,
+    touched: false,
+    validators: [required]
+  },
+  content: {
+    value: '',
+    valid: false,
+    touched: false,
+    validators: [required, length({ min: 5 })]
+  }
+}
 
 const AddProject = (props) => {
-    const [projectForm, setProjectForm] = useState({
-        title: {
-          value: '',
-          valid: false,
-          touched: false,
-          validators: [required, length({ min: 5 })]
-        },
-        image: {
-          value: '',
-          valid: false,
-          touched: false,
-          validators: [required]
-        },
-        content: {
-          value: '',
-          valid: false,
-          touched: false,
-          validators: [required, length({ min: 5 })]
-        }
-      });
+  const navigate = useNavigate();
+    const [projectForm, setProjectForm] = useState(PROJECT_FORM);
     const [formIsValid, setFormIsValid] = useState(false);
     const [imagePreview, setImagePreview] = useState(null);
    
@@ -69,10 +71,50 @@ const AddProject = (props) => {
     });
   };
  
-const cancelProjectChangeHandler = () => {};
-const acceptProjectChangeHandler = () => {};
+const cancelProjectChangeHandler = () => {
+  setProjectForm(PROJECT_FORM);
+  setFormIsValid(false);
+  props.onCancelEdit()
+};
+const acceptProjectChangeHandler = () => {
+  const formData = new FormData();
+formData.append('title',projectForm.title.value)
+formData.append('image', projectForm.image.value)
+formData.append('content', projectForm.content.value)
 
-const inputBlurHandler = () => {}; 
+fetch('http://localhost:8080/project', {
+
+  method: "POST", 
+  body: formData
+ 
+  
+}).then(response => {
+if (!response.ok){
+  throw new Error("invalid somthing");
+}
+return response.json()
+}).then(result => {
+console.log(result);
+navigate('/projects');
+}).catch(err => {
+console.log(err)
+})
+};
+
+const inputBlurHandler = input => {
+
+  setProjectForm(prevState => {
+    return {
+  
+        ...prevState,
+        [input]: {
+          ...prevState[input],
+          touched: true
+        }
+      
+    };
+  });
+};
     
     return <React.Fragment>
     <Backdrop onClick={cancelProjectChangeHandler} />
@@ -81,7 +123,7 @@ const inputBlurHandler = () => {};
       acceptEnabled={formIsValid}
       onCancelModal={cancelProjectChangeHandler}
       onAcceptModal={acceptProjectChangeHandler}
-      isLoading={props.loading}
+      isLoading={!props.loading}
     >
       <form>
         <Input

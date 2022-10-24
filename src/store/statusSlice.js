@@ -3,14 +3,21 @@ import { createSlice } from "@reduxjs/toolkit";
 const statusSlice = createSlice({
     name: 'status',
     initialState: {
-        token: ''
+        token: '',
+        userId: ''
     },
     reducers: {
         setToken(state, action){
             state.token = action.payload;
         },
-        defaultToken(state, action) {
+        defaultToken(state) {
             state.token = ''
+        },
+        setUserId(state, action) {
+            state.userId = action.payload;
+        },
+        defaultUserId(state) {
+            state.userId = ''
         }
     }
 });

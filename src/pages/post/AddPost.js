@@ -8,8 +8,8 @@ const AddPostPage = (props) => {
     const navigate = useNavigate();
     const [editing, setEditing] = useState(true); 
     const cancelEditHandler = () => {
-      
-        navigate('/')
+      setEditing(false)
+      navigate('/')
     };
     const finishEditHandler = () => {};
     return <React.Fragment>

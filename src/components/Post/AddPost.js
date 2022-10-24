@@ -7,6 +7,7 @@ import Image from "../Image/Image";
 import { required, length } from '../../util/validators';
 import { generateBase64FromImage } from '../../util/image';
 import './AddPost.css';
+import { useNavigate } from "react-router-dom";
 
 
 const POST_FORM = {
@@ -32,6 +33,7 @@ const POST_FORM = {
 
 
 const AddPost = (props) => {
+  const navigate = useNavigate();
     const [postForm, setPostForm] = useState(POST_FORM);
     const [formIsValid, setFormIsValid] = useState(false);
     const [imagePreview, setImagePreview] = useState(null);
@@ -94,7 +96,7 @@ const inputBlurHandler = input => {
   });
 };
 const acceptPostChangeHandler = () => {
-  const formData = new FormData();
+const formData = new FormData();
 formData.append('title',postForm.title.value)
 formData.append('image', postForm.image.value)
 formData.append('content', postForm.content.value)
@@ -111,6 +113,7 @@ if (!response.ok){
 return response.json()
 }).then(result => {
 console.log(result);
+navigate('/');
 }).catch(err => {
 console.log(err)
 })

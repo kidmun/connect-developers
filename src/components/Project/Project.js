@@ -18,7 +18,7 @@ const Project = (props) => {
     <br/>
     <div className="project__content">{props.content}</div>
     <div className="project__actions">
-      <Button mode="flat" link={props.id}>
+      <Button mode="flat" link={"/projects/"+props.id}>
         View Details
       </Button>
       
