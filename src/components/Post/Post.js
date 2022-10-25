@@ -19,15 +19,9 @@ const Post = (props) => {
     <div className="post__content">{props.content}</div>
     <div className="post__actions">
       <Button mode="flat" link={"/posts/"+props.id}>
-        View
+        View Details
       </Button>
-      <Button mode="flat" onClick={props.onStartEdit}>
-        Edit
-      </Button>
-      <Button mode="flat" design="danger" onClick={props.onDelete}>
-        Delete
-      </Button>
-
+   
     </div>
    
   </article>

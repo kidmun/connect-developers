@@ -17,6 +17,8 @@ import PostDetailPage from './pages/post/PostDetail';
 import AccountPage from './pages/user/Account';
 import UsersPage from './pages/user/Users';
 import Notification from './components/Notification/Notification';
+import UserPostsPage from './pages/user/UserPosts';
+import UserProjectsPage from './pages/user/UserProjects';
 
 import './App.css';
 import { statusActions } from './store/statusSlice';
@@ -83,6 +85,8 @@ function App() {
         <Route path="/projects/:projectId" element={ <ProjectDetailPage/> } />
         <Route path="/account" element={ <AccountPage/> } />
         <Route path="/users" element={ <UsersPage/> } />
+        <Route path="/account/posts" element={ <UserPostsPage/> } />
+        <Route path="/account/projects" element={ <UserProjectsPage/> } />
   
       </Routes>
    </React.Fragment>
