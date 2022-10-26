@@ -34,7 +34,7 @@ const DeletePost = (props) => {
         
     }; 
     return <React.Fragment>
-        <Backdrop/>
+        <Backdrop onClick={cancelDeleteHandler}/>
         <Modal
     title="Delete Post"
     acceptEnabled={true}

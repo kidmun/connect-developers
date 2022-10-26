@@ -10,7 +10,7 @@ return <article className="user">
 
 <div className="user__content">{props.email}</div>
 <div className="user__actions">
-  <Button mode="flat" link={"/projects/"+props.id}>
+  <Button mode="flat" link={"/send-message/"+props.id}>
     Message
   </Button>
   

@@ -112,7 +112,7 @@ return response.json()
 console.log(result);
 dispatch(
   statusActions.setNotification({
-    status: "succes",
+    status: "success",
     title: "Signup",
     message: "you have successfully created a project",
   })

@@ -21,6 +21,8 @@ import UsersPage from './pages/user/Users';
 import Notification from './components/Notification/Notification';
 import UserPostsPage from './pages/user/UserPosts';
 import UserProjectsPage from './pages/user/UserProjects';
+import MessagePage from './pages/Message/Message';
+import SendMessagePage from './pages/Message/SendMessage';
 
 import './App.css';
 import { statusActions } from './store/statusSlice';
@@ -91,6 +93,8 @@ function App() {
         <Route path="/users" element={ <UsersPage/> } />
         <Route path="/account/posts" element={ <UserPostsPage/> } />
         <Route path="/account/projects" element={ <UserProjectsPage/> } />
+        <Route path="/messages" element={ <MessagePage/> } />
+        <Route path="/send-message/:receiverId" element={ <SendMessagePage/> } />
   
       </Routes>
    </React.Fragment>
