@@ -35,7 +35,7 @@ const Account = () => {
     };
     return <React.Fragment>
       <div className="button-account">
-      <Button>Edit Account</Button>
+      <Button link={"/edit-account"}>Edit Account</Button>
       </div>
     
     <div className="container">
