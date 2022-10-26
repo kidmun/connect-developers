@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Backdrop from "../Backdrop/Backdrop";
 import Modal from "../Modal/Modal";
 import Input from '../Form/Input/Input';
@@ -35,14 +35,33 @@ const POST_FORM = {
 }
 
 
-const AddPost = (props) => {
+const EditPost = (props) => {
   const navigate = useNavigate();
   const dispatch =useDispatch();
+  
   
   const token = useSelector(state => state.status.token);
     const [postForm, setPostForm] = useState(POST_FORM);
     const [formIsValid, setFormIsValid] = useState(false);
     const [imagePreview, setImagePreview] = useState(null);
+    useEffect(() => {
+        setPostForm(prevState => {
+            return {
+  
+                ...prevState,
+                ["title"]: {
+                  ...prevState["title"],
+                  value: props.post.title
+                },
+                
+                  ["content"]: {
+                    ...prevState["content"],
+                    value: props.post.content
+                  }
+              
+            };
+        });
+    }, [props.post]);
    
   const postInputChangeHandler = (input, value, files) => {
     if (files) {
@@ -104,14 +123,17 @@ const inputBlurHandler = input => {
 const acceptPostChangeHandler = () => {
 const formData = new FormData();
 formData.append('title',postForm.title.value)
-formData.append('image', postForm.image.value)
+if (postForm.image.value !== ''){
+    formData.append('image', postForm.image.value)
+}
+
 formData.append('content', postForm.content.value)
 
-fetch('http://localhost:8080/post', {
+fetch('http://localhost:8080/posts/'+ props.id, {
   headers: {
     Authorization: "Bearer " + token,
   },
-  method: "POST", 
+  method: "PUT", 
   body: formData
  
   
@@ -131,8 +153,8 @@ console.log(result);
 dispatch(
   statusActions.setNotification({
     status: "succes",
-    title: "Signup",
-    message: "you have successfully created a post",
+    title: "Edit Post",
+    message: "you have successfully Updated a post",
   })
 );
 setTimeout(() => {
@@ -192,8 +214,8 @@ else{
     return <React.Fragment>
     <Backdrop onClick={cancelPostChangeHandler} />
     <Modal
-      title="New Post"
-      acceptEnabled={formIsValid}
+      title="Edit Post"
+      acceptEnabled={true}
       onCancelModal={cancelPostChangeHandler}
       onAcceptModal={acceptPostChangeHandler}
       isLoading={!props.loading}
@@ -242,4 +264,4 @@ else{
 };
 
 
-export default AddPost;
+export default EditPost;

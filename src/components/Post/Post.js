@@ -10,7 +10,7 @@ const Post = (props) => {
       <h3 className="post__meta">
         Posted by {props.author} on {props.date}
       </h3>
-      <h1 className="post__title">{props.title}</h1>
+      <br/>
     </header>
     <div className="post__image">
       <Image imageUrl={props.image} contain />

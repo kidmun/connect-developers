@@ -51,10 +51,10 @@ const UserPosts = (props) => {
       <Button mode="flat" link={"/posts/"+props.id}>
         View
       </Button>
-      <Button mode="flat" >
+      <Button mode="flat" link={"/edit-post/"+props.id}>
         Edit
       </Button>
-      <Button mode="flat" design="danger" >
+      <Button mode="flat" design="danger" link={"/delete-post/"+props.id}>
         Delete
       </Button>
 

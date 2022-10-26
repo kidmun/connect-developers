@@ -14,11 +14,15 @@ const Notification = props => {
 
   const cssClasses = `notification ${specialClasses}`;
 
-    return  <section className={cssClasses}>
+    return  <React.Fragment>
+    <section className={cssClasses}>
     <h2>{props.title}</h2>
     
     <p>{props.message}</p>
+    
   </section>
+  <br/>
+  </React.Fragment>
 }
 
 export default Notification;

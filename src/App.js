@@ -11,6 +11,8 @@ import Signup from './pages/auth/Signup';
 import PostPage from './pages/post/Post';
 import ProjectsPage from './pages/project/Projects';
 import AddPostPage from './pages/post/AddPost';
+import EditPostPage from './pages/post/EditPost';
+import DeletePostPage from './pages/user/DeletePost';
 import AddProjectPage from './pages/project/AddProject';
 import ProjectDetailPage from './pages/project/ProjectDetail';
 import PostDetailPage from './pages/post/PostDetail';
@@ -78,6 +80,8 @@ function App() {
         <Route path="/" element={ <PostPage/> } />
         <Route path="/projects" element={ <ProjectsPage/> } />
         <Route path="/add-post" element={ <AddPostPage/> } />
+        <Route path="/edit-post/:postId" element={ <EditPostPage/> } />
+        <Route path="/delete-post/:postId" element={ <DeletePostPage/> } />
         <Route path="/add-project" element={ <AddProjectPage/> } />
         <Route path="/login" element={ <Login/> } />
         <Route path="/signup" element={ <Signup/> } />
