@@ -27,7 +27,7 @@ const MessagePage = () => {
         });
     }, []);
     return <React.Fragment>
-      {messages.map(item => (<Message message={item}/>))}
+      {messages.map(item => (<Message key={item._id} message={item}/>))}
     </React.Fragment>
 };
 

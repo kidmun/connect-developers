@@ -52,9 +52,9 @@ const ProjectsPage = (props) => {
         lastPage={Math.ceil(totalProjects / 2)}
       >
         {projects.map((project) => (
-          <div style={{ marginBottom: 20 }}>
+          <div style={{ marginBottom: 20 }} key={project._id}>
             <Project
-              key={project._id}
+              
               id={project._id}
               author={project.creator}
               date={new Date(project.createdAt).toLocaleDateString("en-US")}

@@ -15,6 +15,7 @@ import EditPostPage from './pages/post/EditPost';
 import DeletePostPage from './pages/user/DeletePost';
 import AddProjectPage from './pages/project/AddProject';
 import ProjectDetailPage from './pages/project/ProjectDetail';
+import DeleteProjectPage from './pages/user/DeleteProject';
 import PostDetailPage from './pages/post/PostDetail';
 import AccountPage from './pages/user/Account';
 import UsersPage from './pages/user/Users';
@@ -24,6 +25,7 @@ import UserProjectsPage from './pages/user/UserProjects';
 import MessagePage from './pages/Message/Message';
 import SendMessagePage from './pages/Message/SendMessage';
 import EditAccountPage from './pages/user/EditAccount';
+import EditProjectPage from './pages/project/EditProject';
 
 import './App.css';
 import { statusActions } from './store/statusSlice';
@@ -90,6 +92,8 @@ function App() {
         <Route path="/signup" element={ <Signup/> } />
         <Route path="/posts/:postId" element={ <PostDetailPage/> } />
         <Route path="/projects/:projectId" element={ <ProjectDetailPage/> } />
+        <Route path="/edit-project/:projectId" element={ <EditProjectPage/> } />
+        <Route path="/delete-project/:projectId" element={ <DeleteProjectPage/> } />
         <Route path="/account" element={ <AccountPage/> } />
         <Route path="/users" element={ <UsersPage/> } />
         <Route path="/account/posts" element={ <UserPostsPage/> } />

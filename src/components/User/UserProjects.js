@@ -51,10 +51,10 @@ const UserProjects = (props) => {
       <Button mode="flat" link={"/projects/"+props.id}>
         View
       </Button>
-      <Button mode="flat" >
+      <Button mode="flat" link={"/edit-project/"+props.id}>
         Edit
       </Button>
-      <Button mode="flat" design="danger" >
+      <Button mode="flat" design="danger" link={"/delete-project/"+props.id}>
         Delete
       </Button>
 
