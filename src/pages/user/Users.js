@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../store/userSlice";
 import Users from "../../components/User/Users";
 import Paginator from "../../components/Paginator/Paginator";
+import { statusActions } from "../../store/statusSlice";
+import { API_URL } from "../../util/url";
 
 let CURRENT_PAGE = 1;
 const UsersPage = () => {
@@ -13,7 +15,7 @@ const UsersPage = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.status.token);
   useEffect(() => {
-    fetch("http://localhost:8080/users?page=" + currentPage, {
+    fetch(API_URL+"/users?page=" + currentPage, {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -25,13 +27,27 @@ const UsersPage = () => {
         return response.json();
       })
       .then((result) => {
-        console.log(result);
         setUsers(result.users);
         setTotalUsers(result.totalItems);
         dispatch(userActions.replaceUsers(users));
       })
       .catch((err) => {
-        console.log(err);
+        dispatch(
+          statusActions.setNotification({
+            status: "error",
+            title: "Server Error",
+            message: "Something is Wrong, Please Wait until We fix it",
+          })
+        );
+        setTimeout(() => {
+          dispatch(
+            statusActions.setNotification({
+              status: "",
+              title: "",
+              message: "",
+            })
+          );
+        }, 8000);
       });
   }, [token, currentPage]);
   const pageChangeHandler = (direction) => {
@@ -45,23 +61,25 @@ const UsersPage = () => {
     }
   };
   return (
-    <ul>
-      <Paginator
-        currentPage={currentPage}
-        lastPage={Math.ceil(totalUsers / 4)}
-        onPrevious={pageChangeHandler.bind(this, "prev")}
-        onNext={pageChangeHandler.bind(this, "next")}
-      >
-        {users.map((item) => (
-          <Users
-            key={item._id}
-            name={item.name}
-            email={item.email}
-            id={item._id}
-          />
-        ))}
-      </Paginator>
-    </ul>
+    <React.Fragment>
+      <ul>
+        <Paginator
+          currentPage={currentPage}
+          lastPage={Math.ceil(totalUsers / 4)}
+          onPrevious={pageChangeHandler.bind(this, "prev")}
+          onNext={pageChangeHandler.bind(this, "next")}
+        >
+          {users.map((item) => (
+            <Users
+              key={item._id}
+              name={item.name}
+              email={item.email}
+              id={item._id}
+            />
+          ))}
+        </Paginator>
+      </ul>
+    </React.Fragment>
   );
 };
 

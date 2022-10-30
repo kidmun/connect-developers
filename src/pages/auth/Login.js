@@ -6,6 +6,7 @@ import { required, length, email } from "../../util/validators";
 import { statusActions } from "../../store/statusSlice";
 import Auth from "./Auth";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../../util/url";
 
 const Login = (props) => {
   const dispatch = useDispatch();
@@ -67,7 +68,7 @@ const Login = (props) => {
           if (!formIsValid) {
             return;
           }
-          fetch("http://localhost:8080/auth/login", {
+          fetch(API_URL+"/auth/login", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -78,19 +79,24 @@ const Login = (props) => {
             }),
           })
             .then((response) => {
+              console.log(response)
               if (!response.ok) {
-                if (response.status === 401){
-         
+                if (response.status === 401) {
                   throw new Error("Credential Error");
-                    }
-                    else {
-                      throw new Error("Server Error");
-                    }
+                } else {
+                  throw new Error("Server Error");
+                }
               }
               return response.json();
             })
             .then((result) => {
               console.log(result);
+              localStorage.setItem("token", result.token);
+              localStorage.setItem("userId", result.userId);
+              setTimeout(() => {
+                localStorage.removeItem("token");
+                localStorage.removeItem("userId");
+              }, 3600000);
               dispatch(statusActions.setToken(result.token));
               dispatch(statusActions.setUserId(result.userId));
               dispatch(
@@ -113,13 +119,13 @@ const Login = (props) => {
             })
             .catch((err) => {
               console.log(err);
-              if (err.message==='Credential Error'){
+              if (err.message === "Credential Error") {
                 dispatch(
-  
                   statusActions.setNotification({
                     status: "error",
                     title: "Login",
-                    message: "Wrong Email Or Password Please Enter a Valid Email and Password",
+                    message:
+                      "Wrong Email Or Password Please Enter a Valid Email and Password",
                   })
                 );
                 setTimeout(() => {
@@ -131,8 +137,7 @@ const Login = (props) => {
                     })
                   );
                 }, 7000);
-              }
-              else{
+              } else {
                 dispatch(
                   statusActions.setNotification({
                     status: "error",
@@ -149,7 +154,6 @@ const Login = (props) => {
                     })
                   );
                 }, 8000);
-              
               }
             });
         }}

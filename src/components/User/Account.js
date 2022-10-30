@@ -1,17 +1,21 @@
 import React, { useState } from "react";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import './Account.css';
+import { statusActions} from '../../store/statusSlice';
 import Button from "../Button/Button";
+import './Account.css';
+import { API_URL } from "../../util/url";
 
 const Account = () => {
+  const dispatch = useDispatch();
+  
   const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const userId = useSelector(state => state.status.userId);
     const token = useSelector(state => state.status.token);
     useEffect(() => {
-        fetch('http://localhost:8080/users/'+ userId, {
+        fetch(API_URL+'/users/'+ userId, {
       headers: {
         Authorization: 'Bearer ' + token
       }
@@ -21,10 +25,25 @@ const Account = () => {
       }
       return response.json()
     }).then(result => {
-      console.log(result)  
+      
       setUser(result.user)
     }).catch(err => {
-      console.log(err)
+      dispatch(
+        statusActions.setNotification({
+          status: "error",
+          title: "Server Error",
+          message: "Something is Wrong, Please Wait until We fix it",
+        })
+      );
+      setTimeout(() => {
+        dispatch(
+          statusActions.setNotification({
+            status: "",
+            title: "",
+            message: "",
+          })
+        );
+      }, 8000);
     })
     }, [token]);
     const postHandler = () => {

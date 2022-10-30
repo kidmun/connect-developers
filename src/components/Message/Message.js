@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { API_URL } from "../../util/url";
 import './Message.css';
 
 const Message = (props) => {
   const token = useSelector(state => state.status.token);
   const [user, setUser] = useState(null);
   useEffect(() => {
-    fetch('http://localhost:8080/users/'+props.message.sender, {
+    fetch(API_URL+'/users/'+props.message.sender, {
       headers: {
         Authorization: "Bearer " + token,
         'Content-Type': 'application/json'

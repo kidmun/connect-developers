@@ -1,7 +1,9 @@
 import React, { useEffect, useState} from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import EditPost from "../../components/Post/EditPost";
+import { statusActions } from "../../store/statusSlice";
+import {API_URL } from '../../util/url';
 
 
 
@@ -9,9 +11,10 @@ const EditPostPage = (props) => {
     const [post, setPost] = useState(null);
     const token = useSelector(state => state.status.token);
     const { postId} = useParams();
-    console.log(postId)
+    const dispatch =useDispatch();
+   
     useEffect(() => {
-        fetch('http://localhost:8080/posts/'+postId, {
+        fetch(API_URL + '/posts/'+postId, {
             headers: {
                 Authorization: "Bearer " + token,
               }
@@ -21,10 +24,25 @@ const EditPostPage = (props) => {
             }
             return response.json();
         }).then(result => {
-            console.log(result)
+        
             setPost(result.post)
         }).catch(err => {
-            console.log(err)
+            dispatch(
+                statusActions.setNotification({
+                  status: "error",
+                  title: "Server Error",
+                  message: "Something is Wrong, Please Wait until We fix it",
+                })
+              );
+              setTimeout(() => {
+                dispatch(
+                  statusActions.setNotification({
+                    status: "",
+                    title: "",
+                    message: "",
+                  })
+                );
+              }, 8000);
         })
     }, [] );
     const navigate = useNavigate();

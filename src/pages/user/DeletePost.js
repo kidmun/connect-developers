@@ -4,7 +4,7 @@ import DeletePost from "../../components/User/DeletePost";
 
 const DeletePostPage = () => {
     const {postId} = useParams();
-    console.log(postId)
+
 
     return <React.Fragment>
         <DeletePost id={postId}/>

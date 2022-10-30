@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Post from "../../components/Post/Post";
-import { userActions } from "../../store/userSlice";
 import { postActions } from "../../store/postSlice";
 import Paginator from "../../components/Paginator/Paginator";
+import { statusActions } from "../../store/statusSlice";
+import { API_URL } from "../../util/url";
 
 let CURRENT_PAGE = 1;
 const startEditPostHandler = (id) => {};
@@ -12,14 +13,13 @@ const deletePostHandler = (id) => {};
 const PostPage = (props) => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.status.token);
-  console.log(token);
   const [posts, setPosts] = useState([]);
   const [totalPosts, setTotalPosts] = useState(CURRENT_PAGE);
   const [currentPage, setCurrentPage] = useState(CURRENT_PAGE);
  
 
   useEffect(() => {
-    fetch("http://localhost:8080/posts?page=" + currentPage, {
+    fetch(API_URL+"/posts?page=" + currentPage, {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -31,13 +31,28 @@ const PostPage = (props) => {
         return response.json();
       })
       .then((result) => {
-        console.log(result);
+  
         setPosts(result.posts);
         dispatch(postActions.replacePosts(result.posts));
         setTotalPosts(result.totalItems);
       })
       .catch((err) => {
-        console.log(err);
+        dispatch(
+          statusActions.setNotification({
+            status: "error",
+            title: "Server Error",
+            message: "Something is Wrong, Please Wait until We fix it",
+          })
+        );
+        setTimeout(() => {
+          dispatch(
+            statusActions.setNotification({
+              status: "",
+              title: "",
+              message: "",
+            })
+          );
+        }, 1000);
       });
   }, [currentPage]);
   const pageChangeHandler = (direction) => {
@@ -66,7 +81,7 @@ const PostPage = (props) => {
               date={new Date(post.createdAt).toLocaleDateString("en-US")}
               title={post.title}
               image={
-                "http://localhost:8080/images/" +
+                API_URL+"/images/" +
                 post.imageUrl.slice(7, post.imageUrl.length)
               }
               content={post.content}
@@ -75,6 +90,7 @@ const PostPage = (props) => {
             />
           </div>
         ))}
+         {posts.length === 0 && <h1 style={{textAlign: 'center', color: "blue"}}>No Posts </h1>}
       </Paginator>
     </ul>
   );
