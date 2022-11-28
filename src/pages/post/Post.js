@@ -14,6 +14,7 @@ const PostPage = (props) => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.status.token);
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [totalPosts, setTotalPosts] = useState(CURRENT_PAGE);
   const [currentPage, setCurrentPage] = useState(CURRENT_PAGE);
  
@@ -31,7 +32,7 @@ const PostPage = (props) => {
         return response.json();
       })
       .then((result) => {
-  
+        setLoading(false);
         setPosts(result.posts);
         dispatch(postActions.replacePosts(result.posts));
         setTotalPosts(result.totalItems);
@@ -90,7 +91,8 @@ const PostPage = (props) => {
             />
           </div>
         ))}
-         {posts.length === 0 && <h1 style={{textAlign: 'center', color: "blue"}}>No Posts </h1>}
+         {loading && <h1 style={{textAlign: 'center', color: "blue"}}>Loading... </h1>}
+         {posts.length === 0 && !loading && <h1 style={{textAlign: 'center', color: "blue"}}>No Posts </h1>}
       </Paginator>
     </ul>
   );

@@ -6,6 +6,7 @@ import { API_URL } from "../../util/url";
 
 const UserProjectsPage = () => {
   const [projectsId, setProjectsId] = useState([]);
+  const [loading, setLoading] = useState(true);
   const token = useSelector((state) => state.status.token);
   const userId = useSelector((state) => state.status.userId);
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const UserProjectsPage = () => {
         return response.json();
       })
       .then((result) => {
+        setLoading(false);
         setProjectsId(result.user.projects);
       })
       .catch((err) => {
@@ -52,9 +54,10 @@ const UserProjectsPage = () => {
           <UserProjects key={item} id={item} />
         ))}
       </ul>
-      {projectsId.length === 0 && (
-        <h2 style={{ textAlign: "center", color: "red" }}>
-          You have no projects{" "}
+      {loading && <h1 style={{textAlign: 'center', color: "blue"}}>Loading... </h1>}
+      {projectsId.length === 0 && !loading && (
+        <h2 style={{ textAlign: "center", color: "blue" }}>
+          You have no project{" "}
         </h2>
       )}
     </React.Fragment>

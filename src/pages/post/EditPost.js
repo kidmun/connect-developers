@@ -49,7 +49,7 @@ const EditPostPage = (props) => {
     const [editing, setEditing] = useState(true); 
     const cancelEditHandler = () => {
       setEditing(false)
-      navigate('/')
+      navigate('/account/posts')
     };
     const finishEditHandler = () => {};
     return <React.Fragment>

@@ -22,6 +22,7 @@ const AddProjectPage = React.lazy(() => import("./pages/project/AddProject"));
 const EditProjectPage = React.lazy(() => import("./pages/project/EditProject"));
 const DeleteProjectPage = React.lazy(() => import("./pages/user/DeleteProject"));
 const MessagePage = React.lazy(() => import("./pages/Message/Message"));
+const SentMessagePage = React.lazy(() => import("./pages/Message/MessageSent"));
 const SendMessagePage = React.lazy(() => import("./pages/Message/SendMessage"));
 const EditAccountPage = React.lazy(() => import("./pages/user/EditAccount"));
 const AccountPage = React.lazy(() => import("./pages/user/Account"));
@@ -124,6 +125,7 @@ function App() {
         <Route path="/account/posts" element={<UserPostsPage />} />
         <Route path="/account/projects" element={<UserProjectsPage />} />
         <Route path="/messages" element={<MessagePage />} />
+        <Route path="/messages_sent" element={<SentMessagePage />} />
         <Route path="/send-message/:receiverId" element={<SendMessagePage />} />
         <Route path="/edit-account" element={<EditAccountPage />} />
        

@@ -9,6 +9,7 @@ let CURRENT_PAGE = 1;
 const ProjectsPage = (props) => {
   const token = useSelector((state) => state.status.token);
   const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [totalProjects, setTotalProjects] = useState(CURRENT_PAGE);
   const [currentPage, setCurrentPage] = useState(CURRENT_PAGE);
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ const ProjectsPage = (props) => {
         return response.json();
       })
       .then((result) => {
+        setLoading(false);
         setProjects(result.projects);
         setTotalProjects(result.totalItems);
       })
@@ -81,7 +83,8 @@ const ProjectsPage = (props) => {
             />
           </div>
         ))}
-        {projects.length === 0 && (
+         {loading && <h1 style={{textAlign: 'center', color: "blue"}}>Loading... </h1>}
+        {projects.length === 0 && !loading && (
           <h1 style={{ textAlign: "center", color: "blue" }}>No Projects </h1>
         )}
       </Paginator>

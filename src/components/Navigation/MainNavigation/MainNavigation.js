@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Routes, Route, Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Logo from "../../Logo/Logo";
 import MobileToggle from "../MobileToggle/MobileToggle";
 import NavigationItems from "../NavigationItems/NavigationItems";

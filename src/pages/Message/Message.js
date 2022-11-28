@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Button from "../../components/Button/Button";
 import Message from "../../components/Message/Message";
 import { statusActions } from "../../store/statusSlice";
 import { API_URL } from "../../util/url";
 
 const MessagePage = () => {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(true);
   const token = useSelector((state) => state.status.token);
   const dispatch = useDispatch();
 
@@ -22,7 +26,8 @@ const MessagePage = () => {
         return response.json();
       })
       .then((result) => {
-        console.log(result);
+        
+        setLoading(false);
         setMessages(result.messages);
       })
       .catch((err) => {
@@ -44,12 +49,20 @@ const MessagePage = () => {
         }, 8000);
       });
   }, []);
+  const sentMesssagesHandler = ()=> {
+    navigate('/messages_sent');
+  }
   return (
     <React.Fragment>
+
+      <Button onClick={sentMesssagesHandler}>Sent Messages</Button>
+      
+     
       {messages.map((item) => (
         <Message key={item._id} message={item} />
       ))}
-      {messages.length === 0 && (
+      {loading && <h1 style={{textAlign: 'center', color: "blue"}}>Loading... </h1>}
+      {messages.length === 0 && !loading && (
         <h1 style={{ textAlign: "center", color: "blue" }}>No Messages </h1>
       )}
     </React.Fragment>

@@ -1,31 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import EditProject from "../../components/Project/EditProject";
+import MesssageSent from '../../components/Message/MessageSent';
 import { statusActions } from "../../store/statusSlice";
 import { API_URL } from "../../util/url";
 
-const EditProjectPage = (props) => {
-  const dispatch = useDispatch();
-  const [project, setProject] = useState(null);
+const MessagePage = () => {
+  const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(true);
   const token = useSelector((state) => state.status.token);
-  const { projectId } = useParams();
-  console.log(projectId);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    fetch(API_URL+"/projects/" + projectId, {
+    fetch(API_URL+"/messages_sent", {
       headers: {
         Authorization: "Bearer " + token,
       },
     })
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("Response not OK");
+        if (!response) {
+          throw new Error("response not ok");
         }
         return response.json();
       })
       .then((result) => {
-        console.log(result);
-        setProject(result.project);
+        
+        setLoading(false);
+       
+        setMessages(result.messages);
       })
       .catch((err) => {
         dispatch(
@@ -46,27 +47,17 @@ const EditProjectPage = (props) => {
         }, 8000);
       });
   }, []);
-  const navigate = useNavigate();
-  const [editing, setEditing] = useState(true);
-  const cancelEditHandler = () => {
-    setEditing(false);
-    navigate("/account/projects");
-  };
-  const finishEditHandler = () => {};
   return (
     <React.Fragment>
-      {editing && project && (
-        <EditProject
-          editing={true}
-          loading={true}
-          onCancelEdit={cancelEditHandler}
-          onFinishEdit={finishEditHandler}
-          id={projectId}
-          project={project}
-        />
+      {messages.map((item) => (
+        <MesssageSent key={item._id} message={item} />
+      ))}
+      {loading && <h1 style={{textAlign: 'center', color: "blue"}}>Loading... </h1>}
+      {messages.length === 0 && !loading && (
+        <h1 style={{ textAlign: "center", color: "blue" }}>No Messages </h1>
       )}
     </React.Fragment>
   );
 };
 
-export default EditProjectPage;
+export default MessagePage;

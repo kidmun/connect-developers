@@ -3,11 +3,11 @@ import { useSelector } from "react-redux";
 import { API_URL } from "../../util/url";
 import './Message.css';
 
-const Message = (props) => {
+const MessageSent = (props) => {
   const token = useSelector(state => state.status.token);
   const [user, setUser] = useState(null);
   useEffect(() => {
-    fetch(API_URL+'/users/'+props.message.sender, {
+    fetch(API_URL+'/users/'+props.message.reciever, {
       headers: {
         Authorization: "Bearer " + token,
         'Content-Type': 'application/json'
@@ -26,7 +26,7 @@ const Message = (props) => {
     return <article className="user">
     <header className="user__header">
      
-     {user && <h1 className="user__title">From {user.name}</h1>} 
+     {user && <h1 className="user__title">to {user.name}</h1>} 
     </header>
     
     <div className="user__content">{props.message.content}</div>
@@ -34,4 +34,4 @@ const Message = (props) => {
     </article>
 };
 
-export default Message;
+export default MessageSent;
